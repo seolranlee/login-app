@@ -27,20 +27,22 @@ class Login extends Component {
     }
     
     handleLogin = () => {
-        axios.post('http://110.10.189.209:6899/users/signin', { email: this.state.email, password: this.state.password} ).then(response=>{
+        axios.post('https://baelee.com:10099/login', { email: this.state.email, password: this.state.password} ).then(response=>{
             this.setState({
                 loading: false,
             })
-            setUserSession(response.data.token, response.data.user);
-            this.props.history.push('/dashboard');
-        }).catch(error=>{
-            this.setState({
-                loading: false,
-            })
-            if(error.response.status === 401 || error.response.status === 400) this.setState({ error: error.response.data.message});
-            else this.setState({ error: '알수 없는 에러'})
+            setUserSession(response.data.token, response.data.email);
+
+            if(response.data.result === 1){
+                this.props.history.push('/dashboard');
+            }else if(response.data.result === 0) {
+                console.log('error',response.data)
+                this.setState({ error: response.data.message});
+            }else{
+                this.setState({ error: '알수 없는 에러'})
+            }
+            
         });
-        // props.history.push('/dashboard')
     }
 
     handleChange = (e) => {
@@ -54,7 +56,7 @@ class Login extends Component {
             isSignUp: !this.state.isSignUp,
             email: '',
             password: '',
-            error: null,
+            error: null
         })
     }
 
@@ -64,18 +66,20 @@ class Login extends Component {
         if(password!==confirm_password){
             this.setState({ error: '확인된 비밀번호가 틀립니다.'})
         }else{
-            axios.post('http://110.10.189.209:6899/users/signup', { email: this.state.email, password: this.state.password} ).then(response=>{
+            axios.post('https://baelee.com:10099/join', { email: this.state.email, password: this.state.password} ).then(response=>{
                 this.setState({
                     loading: false,
                 })
-                setUserSession(response.data.token, response.data.user);
-                this.props.history.push('/dashboard');
-            }).catch(error=>{
-                this.setState({
-                    loading: false,
-                })
-                if(error.response.status === 401 || error.response.status === 400) this.setState({ error: error.response.data.message});
-                else this.setState({ error: '알수 없는 에러'})
+                setUserSession(response.data.token, response.data.email);
+
+                if(response.data.result === 1){
+                    this.props.history.push('/dashboard');
+                }else if(response.data.result === 0) {
+                    console.log('error',response.data)
+                    this.setState({ error: response.data.message});
+                }else{
+                    this.setState({ error: '알수 없는 에러'})
+                }
             });
         }
         
@@ -86,7 +90,7 @@ class Login extends Component {
 
         return (
             <div>
-                Login<br /><br />
+                {this.state.isSignUp ? "Sign up" : 'Login'}<br /><br />
                 <div>
                     Email<br />
                     <input type="text" name="email" value={this.state.email} onChange={this.handleChange}/>
@@ -103,7 +107,6 @@ class Login extends Component {
                         <div><small style={{color:'red'}}>{this.state.error}</small></div>
                     </div>
                 }
-                {/* <div><small style={{color:'red'}}>{this.state.error}</small></div><br /> */}
                 {this.state.error&&!this.state.isSignUp && <div><small style={{color:'red'}}>{this.state.error}</small></div>}<br/>
                 {!this.state.isSignUp && <input type="button" value={this.state.loading ? 'Loading...' : 'Login'} onClick={this.handleLogin}/>}<br/>
                 {this.state.isSignUp && <input type="button" value="submit" onClick={this.handleSignUp}/>}<br/>

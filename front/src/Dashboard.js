@@ -2,7 +2,7 @@ import React from 'react';
 import { getUser, removeUserSession } from './Utils/Common'
 
 const Dashboard = (props) => {
-    const user = getUser();
+    const email = getUser();
 
     const handleLogout = () => {
         removeUserSession();
@@ -10,7 +10,7 @@ const Dashboard = (props) => {
     }
     return (
         <div>
-            Welcome {user.email}<br /><br />
+            Welcome {email}<br /><br />
             <input type="button" onClick={handleLogout} value="Logout" />
         </div>
     );

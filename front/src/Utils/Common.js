@@ -1,5 +1,5 @@
 export const getUser = () => {
-    const userStr = sessionStorage.getItem('user');
+    const userStr = sessionStorage.getItem('email');
     if(userStr) return JSON.parse(userStr);
     else return null;
 }
@@ -10,10 +10,10 @@ export const getToken = () => {
 
 export const removeUserSession = () => {
     sessionStorage.removeItem('token');
-    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('email');
 }
 
-export const setUserSession = (token, user) => {
+export const setUserSession = (token, email) => {
     sessionStorage.setItem('token',token);
-    sessionStorage.setItem('user',JSON.stringify(user));
+    sessionStorage.setItem('email',JSON.stringify(email));
 }
