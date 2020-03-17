@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 import PublicRoute from './Utils/PublicRoute';
 import PrivateRoute from './Utils/PrivateRoute';
 
-import Login from './Login';
+import LoginContainer from './containers/LoginContainer';
 import Dashboard from './Dashboard';
 import Home from './Home';
 
@@ -21,7 +21,7 @@ const App = () => {
           <div className="content">
             <Switch>
               <Route exact path="/" component={Home} />
-              <PublicRoute path="/login" component={Login} />
+              <PublicRoute path="/login" component={LoginContainer} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
             </Switch>
           </div>

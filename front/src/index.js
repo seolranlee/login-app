@@ -1,9 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import {createStore} from 'redux';
+import rootReducer from './store/modules';
+
+// provier 불러오기
+import {Provider} from 'react-redux';
+
 import App from './App';
 import './index.css';
 
+// create store
+const store = createStore(rootReducer);
+console.log(store.getState());
+
 ReactDOM.render(
-  <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
