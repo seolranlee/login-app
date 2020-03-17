@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Login from '../Login';
-import { changeIsSignup, chagneError, changeInput, changeEmail, changePassword, changeConfirmPassword } from '../store/modules/login';
+import { changeIsSignup, chagneError, changeInput } from '../store/modules/login';
 
 import axios from 'axios'
 import {setUserSession} from '../Utils/Common'
@@ -91,9 +91,6 @@ const mapDispatchToProps = dispatch => ({
     changeIsSignup: () => dispatch(changeIsSignup()),
     chagneError: (message) => dispatch(chagneError(message)),
     changeInput: (e) => dispatch(changeInput(e)),
-    changeEmail: (email) => dispatch(changeEmail(email)),
-    changePassword: (password) => dispatch(changePassword(password)),
-    changeConfirmPassword: (confirm_password) => dispatch(changeConfirmPassword(confirm_password)),
   });
 
 export default connect(
