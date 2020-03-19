@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Login from '../Login';
-import { changeIsSignup, chagneError, changeInput } from '../store/modules/login';
+import { changeIsSignup, chagneError, changeInput, resetValue } from '../store/modules/login';
 
 import axios from 'axios'
 import {setUserSession} from '../Utils/Common'
 
 class LoginContainer extends Component {
+
+    handleReset = () => {
+        const {resetValue} = this.props;
+        resetValue();
+    }
 
     handleChange = (e) => {
         const {changeInput, email, password} = this.props;
@@ -15,16 +20,16 @@ class LoginContainer extends Component {
     }
     
     toggleSignUp = () => {
-        const { changeIsSignup } = this.props;
+        const { changeIsSignup, resetValue } = this.props;
+        resetValue();
         changeIsSignup();
     }
 
     handleLogin = () => {
         const {email, password, chagneError} = this.props;
-        axios.post('https://baelee.com:10099/login', { email: email, password: password} ).then(response=>{
-            setUserSession(response.data.token, response.data.email);
-            
+        axios.post('https://baelee.com:10099/login', { email: email, password: password} ).then(response=>{            
             if(response.data.result === 1){
+                setUserSession(response.data.token, response.data.email);
                 this.props.history.push('/dashboard');
             }else if(response.data.result === 0) {
                 console.log('error',response.data)
@@ -43,9 +48,8 @@ class LoginContainer extends Component {
             chagneError('확인된 비밀번호가 틀립니다.')
         }else{
             axios.post('https://baelee.com:10099/join', { email: email, password: password} ).then(response=>{
-                setUserSession(response.data.token, response.data.email);
-
                 if(response.data.result === 1){
+                    setUserSession(response.data.token, response.data.email);
                     this.props.history.push('/dashboard');
                 }else if(response.data.result === 0) {
                     console.log('error',response.data);
@@ -72,6 +76,7 @@ class LoginContainer extends Component {
                 onChange={this.handleChange}
                 onLogin={this.handleLogin}
                 onSignUp={this.handleSignUp}
+                onReset={this.handleReset}
             />
         );
     }
@@ -91,6 +96,7 @@ const mapDispatchToProps = dispatch => ({
     changeIsSignup: () => dispatch(changeIsSignup()),
     chagneError: (message) => dispatch(chagneError(message)),
     changeInput: (e) => dispatch(changeInput(e)),
+    resetValue: () => dispatch(resetValue()),
   });
 
 export default connect(

@@ -8,7 +8,8 @@ import rootReducer from './store/modules';
 import {Provider} from 'react-redux';
 
 import App from './App';
-import './index.css';
+import './common.css';
+import './index.scss';
 
 // create store
 const store = createStore(rootReducer);

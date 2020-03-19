@@ -1,17 +1,10 @@
 import React from 'react';
-import { getUser, removeUserSession } from './Utils/Common'
 
-const Dashboard = (props) => {
-    const email = getUser();
-
-    const handleLogout = () => {
-        removeUserSession();
-        props.history.push('/login');
-    }
+const Dashboard = ({email, onReset, onLogout}) => {
     return (
         <div>
             Welcome {email}<br /><br />
-            <input type="button" onClick={handleLogout} value="Logout" />
+            <input type="button" onClick={() => onLogout()} value="Logout" />
         </div>
     );
 };

@@ -1,12 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Switch, NavLink } from 'react-router-dom';
 
 import PublicRoute from './Utils/PublicRoute';
 import PrivateRoute from './Utils/PrivateRoute';
 
 import LoginContainer from './containers/LoginContainer';
-import Dashboard from './Dashboard';
-import Home from './Home';
+import DashboardContainer from './containers/DashboardContainer';
+// import Home from './Home';
 
 const App = () => {
   return (
@@ -14,15 +14,13 @@ const App = () => {
       <BrowserRouter>
         <div>
           <div className="header">
-            <NavLink exact activeClassName="active" to="/">Home</NavLink>
-            <NavLink activeClassName="active" to="/login">Login</NavLink><small>(Access without token only)</small>
+            <NavLink exact activeClassName="active" to="/">Login</NavLink><small>(Access without token only)</small>
             <NavLink activeClassName="active" to="/dashboard">Dashboard</NavLink><small>(Access with token only)</small>
           </div>
           <div className="content">
             <Switch>
-              <Route exact path="/" component={Home} />
-              <PublicRoute path="/login" component={LoginContainer} />
-              <PrivateRoute path="/dashboard" component={Dashboard} />
+              <PublicRoute exact path="/" component={LoginContainer} />
+              <PrivateRoute path="/dashboard" component={DashboardContainer} />
             </Switch>
           </div>
         </div>

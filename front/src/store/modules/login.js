@@ -4,11 +4,15 @@ const CHANGE_ERROR = 'login/CHANGE_ERROR';
 
 const CHANGE_INPUT = 'login/CHANGE_INPUT';
 
+const RESET_VALUE = 'login/RESET_VALUE'
+
 // action function
 export const changeIsSignup=()=>({type:CHANGE_ISSIGNUP});
 export const chagneError=(message)=>({type:CHANGE_ERROR, message});
 
 export const changeInput=(e)=>({type:CHANGE_INPUT, e});
+
+export const resetValue=()=>({type:RESET_VALUE});
 
 // initState
 const initialState = {
@@ -36,6 +40,14 @@ export default function login(state=initialState, action){
             return {
                 ...state,
                 [action.e.target.name]: action.e.target.value
+            }
+        case RESET_VALUE:
+            return {
+                ...state,
+                error: null,
+                email: '',
+                password: '',
+                confirm_password: '',
             }
         default:
             return state;
