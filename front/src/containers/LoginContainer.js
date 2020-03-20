@@ -7,6 +7,26 @@ import axios from 'axios'
 import {setUserSession} from '../Utils/Common'
 
 class LoginContainer extends Component {
+    
+    // validateCheck = (name, value) => {
+    //     const {chagneError} = this.props;
+    //     switch(name){
+    //         case 'email':
+    //             if(!value) chagneError('Please enter Email');
+    //             else if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)) chagneError("Please enter valid Email.");
+    //             break;
+    //         case "password":
+    //             // refValue is the value of Confirm Password field
+    //             if (!value) chagneError('Please enter Password.');
+    //             break;
+    //         case "confirmPassword":
+    //             // refValue is the value of Password field
+    //             if (!value) chagneError('Please enter Confirm Password.');
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
 
     handleReset = () => {
         const {resetValue} = this.props;
@@ -44,7 +64,11 @@ class LoginContainer extends Component {
     handleSignUp = () => {
         const {email, password, confirm_password, chagneError} = this.props;
         console.log(email, password, confirm_password)
-        if(password!==confirm_password){
+        if(email.length===0||password.length===0){
+            chagneError('모든 칸을 채워주세요')
+        }else if(!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+            chagneError('이메일 형식이 아닙니다.')
+        }else if(password!==confirm_password){
             chagneError('확인된 비밀번호가 틀립니다.')
         }else{
             axios.post('https://baelee.com:10099/join', { email: email, password: password} ).then(response=>{
