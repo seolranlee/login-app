@@ -44,6 +44,7 @@ export default function login(state=initialState, action){
         case RESET_VALUE:
             return {
                 ...state,
+                isSignUp: false,
                 error: null,
                 email: '',
                 password: '',

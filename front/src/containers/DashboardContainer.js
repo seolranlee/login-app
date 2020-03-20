@@ -30,6 +30,7 @@ class DashboardContainer extends Component {
     }
 }
 const mapStateToProps = state => ({
+    isSignUp: state.login.isSignUp,
     error: state.login.error,
     email: state.login.email,
     password: state.login.password,
